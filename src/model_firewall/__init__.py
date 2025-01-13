@@ -15,3 +15,5 @@ __all__ = [
     "Verdict",
     "builtin_rules",
 ]
+
+__version__ = "0.1.0"
