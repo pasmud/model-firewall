@@ -7,3 +7,7 @@ import json
 import sys
 from pathlib import Path
 from typing import Any, Sequence
+
+from .engine import Firewall, FirewallConfig
+from .models import Direction, Verdict
+from .rules import builtin_rules, dump_rules
