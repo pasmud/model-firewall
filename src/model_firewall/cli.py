@@ -11,3 +11,8 @@ from typing import Any, Sequence
 from .engine import Firewall, FirewallConfig
 from .models import Direction, Verdict
 from .rules import builtin_rules, dump_rules
+
+
+EXIT_OK = 0
+EXIT_BLOCKED = 1
+EXIT_ERROR = 2
