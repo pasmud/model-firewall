@@ -16,3 +16,17 @@ from .rules import builtin_rules, dump_rules
 EXIT_OK = 0
 EXIT_BLOCKED = 1
 EXIT_ERROR = 2
+
+
+def _build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="model-firewall",
+        description="Evaluate LLM inputs/outputs against firewall rules.",
+    )
+    parser.add_argument(
+        "--version",
+        action="version",
+        version="model-firewall 0.1.0",
+    )
+
+    subparsers = parser.add_subparsers(dest="command", required=True)
