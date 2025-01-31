@@ -30,3 +30,11 @@ def _build_parser() -> argparse.ArgumentParser:
     )
 
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    scan = subparsers.add_parser(
+        "scan",
+        help="Scan text or a file for firewall rule matches.",
+        description="Scan input/output text against firewall rules and emit a report.",
+    )
+    scan.add_argument("--text", help="Text to scan. Use '-' to read from stdin.")
+    scan.add_argument("--file", help="Path to a UTF-8 text file to scan.")
