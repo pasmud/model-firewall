@@ -38,3 +38,21 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     scan.add_argument("--text", help="Text to scan. Use '-' to read from stdin.")
     scan.add_argument("--file", help="Path to a UTF-8 text file to scan.")
+    scan.add_argument(
+        "--direction",
+        choices=[d.value for d in Direction if d is not Direction.BOTH],
+        default=Direction.INPUT.value,
+        help="Evaluation direction (default: input).",
+    )
+    scan.add_argument(
+        "--rules",
+        action="append",
+        default=[],
+        metavar="PATH",
+        help="Additional JSON rules file. May be provided multiple times.",
+    )
+    scan.add_argument(
+        "--no-builtin",
+        action="store_true",
+        help="Disable built-in rules (use only rules from --rules).",
+    )
