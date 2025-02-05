@@ -56,3 +56,20 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Disable built-in rules (use only rules from --rules).",
     )
+    scan.add_argument(
+        "--format",
+        choices=["json", "text"],
+        default="json",
+        help="Output format (default: json).",
+    )
+    scan.add_argument(
+        "--max-findings",
+        type=int,
+        default=None,
+        help="Stop after N findings (default: unlimited).",
+    )
+    scan.add_argument(
+        "--redact-matches",
+        action="store_true",
+        help="Redact matched text in findings.",
+    )
