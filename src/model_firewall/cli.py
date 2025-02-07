@@ -73,3 +73,19 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Redact matched text in findings.",
     )
+    scan.add_argument(
+        "--fail-on",
+        choices=[v.value for v in Verdict],
+        default=Verdict.BLOCK.value,
+        help="Exit with code 1 when verdict is at or above this level (default: block).",
+    )
+    scan.add_argument(
+        "--output",
+        help="Write report to a file instead of stdout.",
+    )
+
+    rules_cmd = subparsers.add_parser(
+        "rules",
+        help="List built-in rules as JSON.",
+        description="Print the built-in firewall rules.",
+    )
