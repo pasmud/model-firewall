@@ -89,3 +89,14 @@ def _build_parser() -> argparse.ArgumentParser:
         help="List built-in rules as JSON.",
         description="Print the built-in firewall rules.",
     )
+    rules_cmd.add_argument(
+        "--output",
+        help="Write rules JSON to a file instead of stdout.",
+    )
+
+    return parser
+
+
+def _read_text(args: argparse.Namespace) -> str:
+    if args.text is not None and args.file is not None:
+        raise ValueError("use only one of --text or --file")
