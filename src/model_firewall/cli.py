@@ -100,3 +100,17 @@ def _build_parser() -> argparse.ArgumentParser:
 def _read_text(args: argparse.Namespace) -> str:
     if args.text is not None and args.file is not None:
         raise ValueError("use only one of --text or --file")
+    if args.text is None and args.file is None:
+        raise ValueError("one of --text or --file is required")
+
+    if args.file is not None:
+        path = Path(args.file)
+        try:
+            return path.read_text(encoding="utf-8")
+        except FileNotFoundError as exc:
+            raise ValueError(f"input file not found: {path}") from exc
+        except OSError as exc:
+            raise ValueError(f"unable to read input file {path}: {exc}") from exc
+
+    if args.text == "-":
+        return sys.stdin.read()
