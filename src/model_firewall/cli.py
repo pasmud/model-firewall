@@ -114,3 +114,9 @@ def _read_text(args: argparse.Namespace) -> str:
 
     if args.text == "-":
         return sys.stdin.read()
+    return args.text
+
+
+def _render_text_report(report_dict: dict[str, Any]) -> str:
+    lines: list[str] = []
+    lines.append(f"verdict: {report_dict['verdict']}")
