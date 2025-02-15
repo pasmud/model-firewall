@@ -120,3 +120,6 @@ def _read_text(args: argparse.Namespace) -> str:
 def _render_text_report(report_dict: dict[str, Any]) -> str:
     lines: list[str] = []
     lines.append(f"verdict: {report_dict['verdict']}")
+    lines.append(f"direction: {report_dict['direction']}")
+    lines.append(f"rules_evaluated: {report_dict['rules_evaluated']}")
+    lines.append(f"finding_count: {report_dict['finding_count']}")
