@@ -123,3 +123,17 @@ def _render_text_report(report_dict: dict[str, Any]) -> str:
     lines.append(f"direction: {report_dict['direction']}")
     lines.append(f"rules_evaluated: {report_dict['rules_evaluated']}")
     lines.append(f"finding_count: {report_dict['finding_count']}")
+    findings = report_dict.get("findings", [])
+    if findings:
+        lines.append("findings:")
+        for finding in findings:
+            span = finding.get("span", [None, None])
+            lines.append(
+                "  - "
+                f"[{finding['severity']}/{finding['action']}] "
+                f"{finding['rule_id']} {finding['rule_name']} "
+                f"span={span[0]}..{span[1]} match={finding['match']!r}"
+            )
+    else:
+        lines.append("findings: none")
+    return "\n".join(lines) + "\n"
