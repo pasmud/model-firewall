@@ -137,3 +137,20 @@ def _render_text_report(report_dict: dict[str, Any]) -> str:
     else:
         lines.append("findings: none")
     return "\n".join(lines) + "\n"
+
+
+def _write_output(content: str, output_path: str | None) -> None:
+    if output_path:
+        path = Path(output_path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+    else:
+        sys.stdout.write(content)
+
+
+def _verdict_at_or_above(verdict: Verdict, threshold: Verdict) -> bool:
+    return verdict.rank >= threshold.rank
+
+
+def cmd_scan(args: argparse.Namespace) -> int:
+    text = _read_text(args)
