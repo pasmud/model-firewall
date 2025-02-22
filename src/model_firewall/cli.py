@@ -154,3 +154,13 @@ def _verdict_at_or_above(verdict: Verdict, threshold: Verdict) -> bool:
 
 def cmd_scan(args: argparse.Namespace) -> int:
     text = _read_text(args)
+    config = FirewallConfig(
+        max_findings=args.max_findings,
+        redact_matches=args.redact_matches,
+    )
+    firewall = Firewall.from_rule_files(
+        args.rules,
+        include_builtin=not args.no_builtin,
+        config=config,
+    )
+    report = firewall.scan_text(text=text, direction=args.direction)
