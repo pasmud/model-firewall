@@ -164,3 +164,9 @@ def cmd_scan(args: argparse.Namespace) -> int:
         config=config,
     )
     report = firewall.scan_text(text=text, direction=args.direction)
+    report_dict = report.to_dict()
+    if args.format == "json":
+        content = json.dumps(report_dict, indent=2, sort_keys=True) + "\n"
+    else:
+        content = _render_text_report(report_dict)
+    _write_output(content, args.output)
