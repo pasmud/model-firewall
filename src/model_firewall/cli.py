@@ -170,3 +170,8 @@ def cmd_scan(args: argparse.Namespace) -> int:
     else:
         content = _render_text_report(report_dict)
     _write_output(content, args.output)
+
+    threshold = Verdict.from_value(args.fail_on)
+    if _verdict_at_or_above(report.verdict, threshold):
+        return EXIT_BLOCKED
+    return EXIT_OK
