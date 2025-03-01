@@ -175,3 +175,9 @@ def cmd_scan(args: argparse.Namespace) -> int:
     if _verdict_at_or_above(report.verdict, threshold):
         return EXIT_BLOCKED
     return EXIT_OK
+
+
+def cmd_rules(args: argparse.Namespace) -> int:
+    content = dump_rules(builtin_rules())
+    _write_output(content, args.output)
+    return EXIT_OK
