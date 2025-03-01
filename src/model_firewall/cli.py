@@ -181,3 +181,24 @@ def cmd_rules(args: argparse.Namespace) -> int:
     content = dump_rules(builtin_rules())
     _write_output(content, args.output)
     return EXIT_OK
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    parser = _build_parser()
+    try:
+        args = parser.parse_args(argv)
+        if args.command == "scan":
+            return cmd_scan(args)
+        if args.command == "rules":
+            return cmd_rules(args)
+        parser.error(f"unknown command: {args.command}")
+    except KeyboardInterrupt:
+        sys.stderr.write("interrupted\n")
+        return EXIT_ERROR
+    except ValueError as exc:
+        sys.stderr.write(f"error: {exc}\n")
+        return EXIT_ERROR
+    except Exception as exc:  # pragma: no cover - defensive
+        sys.stderr.write(f"internal error: {exc}\n")
+        return EXIT_ERROR
+    return EXIT_ERROR
