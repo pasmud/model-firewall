@@ -202,3 +202,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         sys.stderr.write(f"internal error: {exc}\n")
         return EXIT_ERROR
     return EXIT_ERROR
+
+
+if __name__ == "__main__":  # pragma: no cover
+    raise SystemExit(main())
