@@ -18,3 +18,6 @@ class RuleCompilationError(ValueError):
 @dataclass
 class FirewallConfig:
     """Configuration for Firewall behavior."""
+
+    default_verdict: Verdict = Verdict.ALLOW
+    max_findings: int | None = None
