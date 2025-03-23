@@ -21,3 +21,5 @@ class FirewallConfig:
 
     default_verdict: Verdict = Verdict.ALLOW
     max_findings: int | None = None
+    redact_matches: bool = False
+    redact_keep_start: int = 2
