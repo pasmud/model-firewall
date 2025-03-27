@@ -23,3 +23,10 @@ class FirewallConfig:
     max_findings: int | None = None
     redact_matches: bool = False
     redact_keep_start: int = 2
+    redact_keep_end: int = 2
+
+    def __post_init__(self) -> None:
+        if self.max_findings is not None and self.max_findings < 1:
+            raise ValueError("max_findings must be >= 1 when provided")
+        if self.redact_keep_start < 0 or self.redact_keep_end < 0:
+            raise ValueError("redact keep values must be >= 0")
