@@ -30,3 +30,9 @@ class FirewallConfig:
             raise ValueError("max_findings must be >= 1 when provided")
         if self.redact_keep_start < 0 or self.redact_keep_end < 0:
             raise ValueError("redact keep values must be >= 0")
+
+
+@dataclass
+class _CompiledRule:
+    rule: Rule
+    regex: re.Pattern[str]
