@@ -36,3 +36,10 @@ class FirewallConfig:
 class _CompiledRule:
     rule: Rule
     regex: re.Pattern[str]
+
+
+@dataclass
+class Firewall:
+    """Evaluate text against a set of firewall rules."""
+
+    rules: list[Rule] = field(default_factory=builtin_rules)
