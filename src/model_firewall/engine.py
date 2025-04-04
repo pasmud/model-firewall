@@ -43,3 +43,4 @@ class Firewall:
     """Evaluate text against a set of firewall rules."""
 
     rules: list[Rule] = field(default_factory=builtin_rules)
+    config: FirewallConfig = field(default_factory=FirewallConfig)
