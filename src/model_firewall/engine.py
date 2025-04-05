@@ -44,3 +44,15 @@ class Firewall:
 
     rules: list[Rule] = field(default_factory=builtin_rules)
     config: FirewallConfig = field(default_factory=FirewallConfig)
+    _compiled: list[_CompiledRule] = field(init=False, repr=False, default_factory=list)
+
+    def __post_init__(self) -> None:
+        self._compiled = []
+        for rule in self.rules:
+            try:
+                compiled = re.compile(rule.pattern)
+            except re.error as exc:
+                raise RuleCompilationError(
+                    f"invalid regex for rule {rule.id!r}: {exc}"
+                ) from exc
+            self._compiled.append(_CompiledRule(rule=rule, regex=compiled))
