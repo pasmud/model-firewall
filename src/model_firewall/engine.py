@@ -56,3 +56,22 @@ class Firewall:
                     f"invalid regex for rule {rule.id!r}: {exc}"
                 ) from exc
             self._compiled.append(_CompiledRule(rule=rule, regex=compiled))
+
+    @classmethod
+    def from_rule_files(
+        cls,
+        paths: Iterable[str | Path],
+        *,
+        include_builtin: bool = True,
+        config: FirewallConfig | None = None,
+    ) -> "Firewall":
+        rules: list[Rule] = []
+        if include_builtin:
+            rules.extend(builtin_rules())
+        for path in paths:
+            rules.extend(load_rules_file(path))
+        return cls(rules=rules, config=config or FirewallConfig())
+
+    @property
+    def rule_count(self) -> int:
+        return len(self.rules)
