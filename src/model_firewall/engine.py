@@ -75,3 +75,70 @@ class Firewall:
     @property
     def rule_count(self) -> int:
         return len(self.rules)
+
+    def _redact(self, text: str) -> str:
+        if not self.config.redact_matches:
+            return text
+        if len(text) <= self.config.redact_keep_start + self.config.redact_keep_end:
+            return "*" * len(text)
+        start = text[: self.config.redact_keep_start]
+        end = text[-self.config.redact_keep_end :] if self.config.redact_keep_end else ""
+        middle_len = max(0, len(text) - len(start) - len(end))
+        return f"{start}{'*' * middle_len}{end}"
+
+    def evaluate(self, text: str, direction: str | Direction = Direction.INPUT) -> Report:
+        """Evaluate text in a given direction and return a Report."""
+
+        if not isinstance(text, str):
+            raise TypeError("text must be a string")
+        direction = Direction.from_value(direction)
+
+        findings: list[Finding] = []
+        verdict = self.config.default_verdict
+        rules_evaluated = 0
+
+        for compiled in self._compiled:
+            rule = compiled.rule
+            if not rule.enabled:
+                continue
+            if not rule.direction.matches(direction):
+                continue
+            rules_evaluated += 1
+            matches = list(compiled.regex.finditer(text))
+            if not matches:
+                continue
+            for match in matches:
+                matched_text = match.group(0)
+                finding = Finding(
+                    rule_id=rule.id,
+                    rule_name=rule.name,
+                    severity=rule.severity,
+                    action=rule.action,
+                    direction=direction,
+                    message=rule.description,
+                    match=self._redact(matched_text),
+                    span=(match.start(), match.end()),
+                )
+                findings.append(finding)
+                verdict = Verdict.combine(verdict, rule.action)
+                if (
+                    self.config.max_findings is not None
+                    and len(findings) >= self.config.max_findings
+                ):
+                    return Report(
+                        direction=direction,
+                        verdict=verdict,
+                        findings=findings,
+                        text_length=len(text),
+                        rules_evaluated=rules_evaluated,
+                        metadata={"truncated": True},
+                    )
+
+        return Report(
+            direction=direction,
+            verdict=verdict,
+            findings=findings,
+            text_length=len(text),
+            rules_evaluated=rules_evaluated,
+            metadata={"truncated": False},
+        )
