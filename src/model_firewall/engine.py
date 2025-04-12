@@ -142,3 +142,8 @@ class Firewall:
             rules_evaluated=rules_evaluated,
             metadata={"truncated": False},
         )
+
+    def scan_text(self, text: str, direction: str | Direction = Direction.INPUT) -> Report:
+        """Alias for evaluate to make CLI and library naming ergonomic."""
+
+        return self.evaluate(text=text, direction=direction)
