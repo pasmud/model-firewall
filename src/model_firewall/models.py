@@ -9,3 +9,6 @@ from typing import Any
 
 class Direction(str, Enum):
     """Direction a rule applies to."""
+
+    INPUT = "input"
+    OUTPUT = "output"
