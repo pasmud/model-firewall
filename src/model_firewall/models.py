@@ -33,3 +33,9 @@ class Direction(str, Enum):
         if direction is Direction.BOTH:
             return True
         return self is direction
+
+
+class Severity(str, Enum):
+    """Severity of a rule finding."""
+
+    LOW = "low"
