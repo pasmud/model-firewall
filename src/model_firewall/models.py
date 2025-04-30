@@ -39,3 +39,5 @@ class Severity(str, Enum):
     """Severity of a rule finding."""
 
     LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
