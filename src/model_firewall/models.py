@@ -64,3 +64,9 @@ class Severity(str, Enum):
             Severity.HIGH: 3,
             Severity.CRITICAL: 4,
         }[self]
+
+
+class Verdict(str, Enum):
+    """Overall verdict for an evaluated text."""
+
+    ALLOW = "allow"
