@@ -70,3 +70,5 @@ class Verdict(str, Enum):
     """Overall verdict for an evaluated text."""
 
     ALLOW = "allow"
+    FLAG = "flag"
+    BLOCK = "block"
