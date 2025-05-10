@@ -97,3 +97,10 @@ class Verdict(str, Enum):
     @classmethod
     def combine(cls, left: "Verdict", right: "Verdict") -> "Verdict":
         return left if left.rank >= right.rank else right
+
+
+@dataclass(frozen=True)
+class Rule:
+    """A firewall rule definition."""
+
+    id: str
