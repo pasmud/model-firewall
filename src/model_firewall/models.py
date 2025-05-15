@@ -104,3 +104,5 @@ class Rule:
     """A firewall rule definition."""
 
     id: str
+    name: str
+    description: str
