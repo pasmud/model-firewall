@@ -106,3 +106,6 @@ class Rule:
     id: str
     name: str
     description: str
+    pattern: str
+    direction: Direction = Direction.BOTH
+    severity: Severity = Severity.MEDIUM
