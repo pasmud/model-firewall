@@ -109,3 +109,5 @@ class Rule:
     pattern: str
     direction: Direction = Direction.BOTH
     severity: Severity = Severity.MEDIUM
+    action: Verdict = Verdict.FLAG
+    enabled: bool = True
