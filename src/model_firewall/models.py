@@ -111,3 +111,56 @@ class Rule:
     severity: Severity = Severity.MEDIUM
     action: Verdict = Verdict.FLAG
     enabled: bool = True
+    tags: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        if not self.id or not self.id.strip():
+            raise ValueError("rule id must not be empty")
+        if not self.name or not self.name.strip():
+            raise ValueError("rule name must not be empty")
+        if not self.pattern:
+            raise ValueError("rule pattern must not be empty")
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "Rule":
+        if not isinstance(data, dict):
+            raise ValueError("rule definition must be an object")
+        required = {"id", "name", "description", "pattern"}
+        missing = required - set(data)
+        if missing:
+            raise ValueError(
+                "rule definition missing required fields: " + ", ".join(sorted(missing))
+            )
+        unknown = set(data) - {
+            "id",
+            "name",
+            "description",
+            "pattern",
+            "direction",
+            "severity",
+            "action",
+            "enabled",
+            "tags",
+        }
+        if unknown:
+            raise ValueError(
+                "rule definition has unknown fields: " + ", ".join(sorted(unknown))
+            )
+        tags = data.get("tags", ())
+        if isinstance(tags, list):
+            tags = tuple(str(tag) for tag in tags)
+        elif isinstance(tags, tuple):
+            tags = tuple(str(tag) for tag in tags)
+        else:
+            raise ValueError("rule tags must be a list of strings")
+        return cls(
+            id=str(data["id"]),
+            name=str(data["name"]),
+            description=str(data["description"]),
+            pattern=str(data["pattern"]),
+            direction=Direction.from_value(data.get("direction", Direction.BOTH)),
+            severity=Severity.from_value(data.get("severity", Severity.MEDIUM)),
+            action=Verdict.from_value(data.get("action", Verdict.FLAG)),
+            enabled=bool(data.get("enabled", True)),
+            tags=tags,
+        )
