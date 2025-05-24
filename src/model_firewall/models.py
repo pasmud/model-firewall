@@ -182,3 +182,6 @@ class Rule:
 @dataclass(frozen=True)
 class Finding:
     """A single rule match found in text."""
+
+    rule_id: str
+    rule_name: str
