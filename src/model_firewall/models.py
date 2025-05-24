@@ -164,3 +164,21 @@ class Rule:
             enabled=bool(data.get("enabled", True)),
             tags=tags,
         )
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "pattern": self.pattern,
+            "direction": self.direction.value,
+            "severity": self.severity.value,
+            "action": self.action.value,
+            "enabled": self.enabled,
+            "tags": list(self.tags),
+        }
+
+
+@dataclass(frozen=True)
+class Finding:
+    """A single rule match found in text."""
