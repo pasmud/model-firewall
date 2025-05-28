@@ -185,3 +185,6 @@ class Finding:
 
     rule_id: str
     rule_name: str
+    severity: Severity
+    action: Verdict
+    direction: Direction
