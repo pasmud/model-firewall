@@ -188,3 +188,5 @@ class Finding:
     severity: Severity
     action: Verdict
     direction: Direction
+    message: str
+    match: str
