@@ -190,3 +190,21 @@ class Finding:
     direction: Direction
     message: str
     match: str
+    span: tuple[int, int]
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "rule_id": self.rule_id,
+            "rule_name": self.rule_name,
+            "severity": self.severity.value,
+            "action": self.action.value,
+            "direction": self.direction.value,
+            "message": self.message,
+            "match": self.match,
+            "span": [self.span[0], self.span[1]],
+        }
+
+
+@dataclass
+class Report:
+    """Result of evaluating text against the firewall."""
