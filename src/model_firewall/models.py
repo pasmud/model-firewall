@@ -211,3 +211,5 @@ class Report:
 
     direction: Direction
     verdict: Verdict
+    findings: list[Finding] = field(default_factory=list)
+    text_length: int = 0
