@@ -208,3 +208,6 @@ class Finding:
 @dataclass
 class Report:
     """Result of evaluating text against the firewall."""
+
+    direction: Direction
+    verdict: Verdict
