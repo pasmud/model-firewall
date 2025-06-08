@@ -213,3 +213,9 @@ class Report:
     verdict: Verdict
     findings: list[Finding] = field(default_factory=list)
     text_length: int = 0
+    rules_evaluated: int = 0
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    @property
+    def blocked(self) -> bool:
+        return self.verdict is Verdict.BLOCK
