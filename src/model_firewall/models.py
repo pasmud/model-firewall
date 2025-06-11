@@ -219,3 +219,11 @@ class Report:
     @property
     def blocked(self) -> bool:
         return self.verdict is Verdict.BLOCK
+
+    @property
+    def flagged(self) -> bool:
+        return self.verdict is Verdict.FLAG
+
+    @property
+    def allowed(self) -> bool:
+        return self.verdict is Verdict.ALLOW
