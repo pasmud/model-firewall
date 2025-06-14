@@ -227,3 +227,17 @@ class Report:
     @property
     def allowed(self) -> bool:
         return self.verdict is Verdict.ALLOW
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "direction": self.direction.value,
+            "verdict": self.verdict.value,
+            "blocked": self.blocked,
+            "flagged": self.flagged,
+            "allowed": self.allowed,
+            "text_length": self.text_length,
+            "rules_evaluated": self.rules_evaluated,
+            "finding_count": len(self.findings),
+            "findings": [finding.to_dict() for finding in self.findings],
+            "metadata": dict(self.metadata),
+        }
