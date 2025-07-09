@@ -119,3 +119,15 @@ def builtin_rules() -> list[Rule]:
             tags=("safety", "compliance"),
         ),
     ]
+
+
+def _normalize_rule_payload(payload: Any) -> list[dict[str, Any]]:
+    if isinstance(payload, dict):
+        if "rules" in payload:
+            rules = payload["rules"]
+        else:
+            raise ValueError("rule file object must contain a 'rules' list")
+    elif isinstance(payload, list):
+        rules = payload
+    else:
+        raise ValueError("rule file must contain a list or an object with 'rules'")
