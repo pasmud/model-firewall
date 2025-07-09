@@ -131,3 +131,7 @@ def _normalize_rule_payload(payload: Any) -> list[dict[str, Any]]:
         rules = payload
     else:
         raise ValueError("rule file must contain a list or an object with 'rules'")
+
+    if not isinstance(rules, list):
+        raise ValueError("'rules' must be a list")
+    normalized: list[dict[str, Any]] = []
