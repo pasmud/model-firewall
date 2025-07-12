@@ -135,3 +135,7 @@ def _normalize_rule_payload(payload: Any) -> list[dict[str, Any]]:
     if not isinstance(rules, list):
         raise ValueError("'rules' must be a list")
     normalized: list[dict[str, Any]] = []
+    for index, item in enumerate(rules):
+        if not isinstance(item, dict):
+            raise ValueError(f"rule at index {index} must be an object")
+        normalized.append(item)
