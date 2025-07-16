@@ -140,3 +140,7 @@ def _normalize_rule_payload(payload: Any) -> list[dict[str, Any]]:
             raise ValueError(f"rule at index {index} must be an object")
         normalized.append(item)
     return normalized
+
+
+def load_rules_file(path: str | Path) -> list[Rule]:
+    """Load rules from a JSON file."""
