@@ -144,3 +144,5 @@ def _normalize_rule_payload(payload: Any) -> list[dict[str, Any]]:
 
 def load_rules_file(path: str | Path) -> list[Rule]:
     """Load rules from a JSON file."""
+
+    rule_path = Path(path)
