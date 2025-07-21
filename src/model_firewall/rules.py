@@ -146,3 +146,13 @@ def load_rules_file(path: str | Path) -> list[Rule]:
     """Load rules from a JSON file."""
 
     rule_path = Path(path)
+    try:
+        payload = json.loads(rule_path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise ValueError(f"rules file not found: {rule_path}") from exc
+    except OSError as exc:
+        raise ValueError(f"unable to read rules file {rule_path}: {exc}") from exc
+    except json.JSONDecodeError as exc:
+        raise ValueError(
+            f"invalid JSON in rules file {rule_path}: {exc.msg} at line {exc.lineno}"
+        ) from exc
