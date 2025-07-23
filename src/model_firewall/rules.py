@@ -156,3 +156,5 @@ def load_rules_file(path: str | Path) -> list[Rule]:
         raise ValueError(
             f"invalid JSON in rules file {rule_path}: {exc.msg} at line {exc.lineno}"
         ) from exc
+
+    return [Rule.from_dict(item) for item in _normalize_rule_payload(payload)]
