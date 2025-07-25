@@ -158,3 +158,7 @@ def load_rules_file(path: str | Path) -> list[Rule]:
         ) from exc
 
     return [Rule.from_dict(item) for item in _normalize_rule_payload(payload)]
+
+
+def dump_rules(rules: list[Rule]) -> str:
+    """Serialize rules as formatted JSON."""
