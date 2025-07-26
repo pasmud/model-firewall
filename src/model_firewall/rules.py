@@ -162,3 +162,5 @@ def load_rules_file(path: str | Path) -> list[Rule]:
 
 def dump_rules(rules: list[Rule]) -> str:
     """Serialize rules as formatted JSON."""
+
+    return json.dumps([rule.to_dict() for rule in rules], indent=2, sort_keys=True) + "\n"
