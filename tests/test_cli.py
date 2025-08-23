@@ -17,3 +17,4 @@ SRC = REPO_ROOT / "src"
 
 def run_cli(*args: str, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
     env = os.environ.copy()
+    existing = env.get("PYTHONPATH", "")
