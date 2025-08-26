@@ -18,3 +18,13 @@ SRC = REPO_ROOT / "src"
 def run_cli(*args: str, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
     env = os.environ.copy()
     existing = env.get("PYTHONPATH", "")
+    env["PYTHONPATH"] = str(SRC) + (os.pathsep + existing if existing else "")
+    return subprocess.run(
+        [sys.executable, "-m", "model_firewall", *args],
+        input=input_text,
+        text=True,
+        capture_output=True,
+        env=env,
+        cwd=str(REPO_ROOT),
+        check=False,
+    )
