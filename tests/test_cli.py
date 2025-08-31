@@ -45,3 +45,37 @@ class CLITests(unittest.TestCase):
         report = json.loads(result.stdout)
         self.assertEqual(report["verdict"], "block")
         self.assertGreater(report["finding_count"], 0)
+
+    def test_scan_file_text_output(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            sample = Path(tmpdir) / "sample.txt"
+            sample.write_text("contact me at person@example.com", encoding="utf-8")
+            result = run_cli(
+                "scan",
+                "--direction",
+                "output",
+                "--file",
+                str(sample),
+                "--format",
+                "text",
+                "--fail-on",
+                "block",
+            )
+        self.assertEqual(result.returncode, 0, msg=result.stderr + result.stdout)
+        self.assertIn("verdict: flag", result.stdout)
+        self.assertIn("PII-001", result.stdout)
+
+    def test_scan_stdin(self) -> None:
+        result = run_cli(
+            "scan",
+            "--direction",
+            "input",
+            "--text",
+            "-",
+            "--format",
+            "json",
+            input_text="hello there",
+        )
+        self.assertEqual(result.returncode, 0, msg=result.stderr + result.stdout)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["verdict"], "allow")
