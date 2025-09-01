@@ -79,3 +79,10 @@ class CLITests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, msg=result.stderr + result.stdout)
         report = json.loads(result.stdout)
         self.assertEqual(report["verdict"], "allow")
+
+    def test_rules_command(self) -> None:
+        result = run_cli("rules")
+        self.assertEqual(result.returncode, 0, msg=result.stderr + result.stdout)
+        rules = json.loads(result.stdout)
+        self.assertIsInstance(rules, list)
+        self.assertTrue(any(rule["id"] == "INJ-001" for rule in rules))
