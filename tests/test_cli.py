@@ -86,3 +86,49 @@ class CLITests(unittest.TestCase):
         rules = json.loads(result.stdout)
         self.assertIsInstance(rules, list)
         self.assertTrue(any(rule["id"] == "INJ-001" for rule in rules))
+
+    def test_custom_rules_file(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            rules_path = Path(tmpdir) / "rules.json"
+            rules_path.write_text(
+                json.dumps(
+                    {
+                        "rules": [
+                            {
+                                "id": "CUSTOM-CLI",
+                                "name": "Codename",
+                                "description": "Flags codename",
+                                "pattern": "project phoenix",
+                                "direction": "output",
+                                "severity": "medium",
+                                "action": "flag",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            result = run_cli(
+                "scan",
+                "--direction",
+                "output",
+                "--text",
+                "release project phoenix now",
+                "--rules",
+                str(rules_path),
+                "--no-builtin",
+                "--format",
+                "json",
+                "--fail-on",
+                "block",
+            )
+        self.assertEqual(result.returncode, 0, msg=result.stderr + result.stdout)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["verdict"], "flag")
+        self.assertEqual(report["finding_count"], 1)
+        self.assertEqual(report["findings"][0]["rule_id"], "CUSTOM-CLI")
+
+    def test_error_on_missing_file(self) -> None:
+        result = run_cli("scan", "--file", "nope.txt")
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("error:", result.stderr)
