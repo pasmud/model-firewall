@@ -132,3 +132,7 @@ class CLITests(unittest.TestCase):
         result = run_cli("scan", "--file", "nope.txt")
         self.assertEqual(result.returncode, 2)
         self.assertIn("error:", result.stderr)
+
+
+if __name__ == "__main__":
+    unittest.main()
