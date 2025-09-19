@@ -5,3 +5,4 @@ from __future__ import annotations
 import unittest
 
 from model_firewall.engine import Firewall, FirewallConfig
+from model_firewall.models import Direction, Rule, Severity, Verdict
