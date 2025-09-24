@@ -36,3 +36,13 @@ class FirewallEngineTests(unittest.TestCase):
         self.assertEqual(report.verdict, Verdict.FLAG)
         self.assertTrue(report.flagged)
         self.assertEqual(report.findings[0].rule_id, "PII-001")
+
+    def test_direction_scoping(self) -> None:
+        firewall = Firewall()
+        # Output-only rule should not trigger on input
+        report = firewall.evaluate("This is a guaranteed cure for all diseases.", Direction.INPUT)
+        self.assertEqual(report.verdict, Verdict.ALLOW)
+
+        report = firewall.evaluate("This is a guaranteed cure for all diseases.", Direction.OUTPUT)
+        self.assertEqual(report.verdict, Verdict.FLAG)
+        self.assertEqual(report.findings[0].rule_id, "OUT-001")
