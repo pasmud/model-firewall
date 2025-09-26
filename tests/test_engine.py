@@ -46,3 +46,18 @@ class FirewallEngineTests(unittest.TestCase):
         report = firewall.evaluate("This is a guaranteed cure for all diseases.", Direction.OUTPUT)
         self.assertEqual(report.verdict, Verdict.FLAG)
         self.assertEqual(report.findings[0].rule_id, "OUT-001")
+
+    def test_custom_rules_and_max_findings(self) -> None:
+        rule = Rule(
+            id="CUSTOM-TEST",
+            name="Token mention",
+            description="Flags token mentions",
+            pattern=r"(?i)token",
+            direction=Direction.BOTH,
+            severity=Severity.LOW,
+            action=Verdict.FLAG,
+        )
+        firewall = Firewall(rules=[rule], config=FirewallConfig(max_findings=1))
+        report = firewall.evaluate("token token token", Direction.INPUT)
+        self.assertEqual(len(report.findings), 1)
+        self.assertTrue(report.metadata.get("truncated"))
