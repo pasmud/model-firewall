@@ -93,3 +93,8 @@ class FirewallEngineTests(unittest.TestCase):
         )
         with self.assertRaises(ValueError):
             Firewall(rules=[bad_rule])
+
+    def test_non_string_input_raises(self) -> None:
+        firewall = Firewall()
+        with self.assertRaises(TypeError):
+            firewall.evaluate(123, Direction.INPUT)  # type: ignore[arg-type]
