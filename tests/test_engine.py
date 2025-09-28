@@ -61,3 +61,35 @@ class FirewallEngineTests(unittest.TestCase):
         report = firewall.evaluate("token token token", Direction.INPUT)
         self.assertEqual(len(report.findings), 1)
         self.assertTrue(report.metadata.get("truncated"))
+
+    def test_redaction(self) -> None:
+        rule = Rule(
+            id="CUSTOM-SECRET",
+            name="Secret",
+            description="Secret value",
+            pattern=r"secret_[a-z0-9]+",
+            direction=Direction.BOTH,
+            severity=Severity.HIGH,
+            action=Verdict.BLOCK,
+        )
+        firewall = Firewall(rules=[rule], config=FirewallConfig(redact_matches=True))
+        report = firewall.evaluate("value=secret_abcdef123456", Direction.OUTPUT)
+        self.assertEqual(report.verdict, Verdict.BLOCK)
+        match_text = report.findings[0].match
+        self.assertNotEqual(match_text, "secret_abcdef123456")
+        self.assertTrue(match_text.startswith("se"))
+        self.assertTrue(match_text.endswith("56"))
+        self.assertIn("*", match_text)
+
+    def test_invalid_rule_regex_raises(self) -> None:
+        bad_rule = Rule(
+            id="BAD-001",
+            name="Bad regex",
+            description="broken",
+            pattern="(",
+            direction=Direction.BOTH,
+            severity=Severity.LOW,
+            action=Verdict.FLAG,
+        )
+        with self.assertRaises(ValueError):
+            Firewall(rules=[bad_rule])
