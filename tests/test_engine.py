@@ -98,3 +98,7 @@ class FirewallEngineTests(unittest.TestCase):
         firewall = Firewall()
         with self.assertRaises(TypeError):
             firewall.evaluate(123, Direction.INPUT)  # type: ignore[arg-type]
+
+
+if __name__ == "__main__":
+    unittest.main()
