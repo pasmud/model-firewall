@@ -35,3 +35,15 @@ class RuleModelTests(unittest.TestCase):
         self.assertEqual(rule.severity, Severity.HIGH)
         self.assertEqual(rule.action, Verdict.BLOCK)
         self.assertEqual(rule.to_dict()["tags"], ["test"])
+
+    def test_rule_from_dict_rejects_unknown_fields(self) -> None:
+        with self.assertRaises(ValueError):
+            Rule.from_dict(
+                {
+                    "id": "X-1",
+                    "name": "Example",
+                    "description": "Example rule",
+                    "pattern": "example",
+                    "unknown": "nope",
+                }
+            )
