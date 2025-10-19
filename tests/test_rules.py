@@ -47,3 +47,32 @@ class RuleModelTests(unittest.TestCase):
                     "unknown": "nope",
                 }
             )
+
+    def test_load_rules_file(self) -> None:
+        payload = {
+            "rules": [
+                {
+                    "id": "CUSTOM-9",
+                    "name": "Codename",
+                    "description": "Detects codename",
+                    "pattern": "project phoenix",
+                    "direction": "output",
+                    "severity": "medium",
+                    "action": "flag",
+                }
+            ]
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            path = Path(tmpdir) / "rules.json"
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            rules = load_rules_file(path)
+        self.assertEqual(len(rules), 1)
+        self.assertEqual(rules[0].id, "CUSTOM-9")
+        self.assertEqual(rules[0].direction, Direction.OUTPUT)
+
+    def test_load_rules_file_invalid_json(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            path = Path(tmpdir) / "rules.json"
+            path.write_text("{not-json", encoding="utf-8")
+            with self.assertRaises(ValueError):
+                load_rules_file(path)
