@@ -1,0 +1,15 @@
+{
+  "rules": [
+    {
+      "id": "CUSTOM-001",
+      "name": "Internal project codename",
+      "description": "Flags mentions of a confidential internal codename.",
+      "pattern": "(?i)\\bproject[ -]?phoenix\\b",
+      "direction": "output",
+      "severity": "medium",
+      "action": "flag",
+      "enabled": true,
+      "tags": ["confidential", "custom"]
+    }
+  ]
+}
