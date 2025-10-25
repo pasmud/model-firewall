@@ -76,3 +76,7 @@ class RuleModelTests(unittest.TestCase):
             path.write_text("{not-json", encoding="utf-8")
             with self.assertRaises(ValueError):
                 load_rules_file(path)
+
+
+if __name__ == "__main__":
+    unittest.main()
