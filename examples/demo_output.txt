@@ -1,0 +1,1 @@
+The deployment uses project phoenix and the admin token is token=abcd1234efgh5678ijkl.
