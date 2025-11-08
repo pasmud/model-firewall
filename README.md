@@ -6,3 +6,12 @@ The project is intentionally lightweight: the core library and CLI use the Pytho
 
 ## Features
 
+- **Direction-aware rules**: rules can target `input`, `output`, or `both`.
+- **Built-in security rules**: prompt-injection/jailbreak patterns, secret/credential leakage, PII, and dangerous command requests.
+- **Custom rules**: load additional JSON rule files and optionally disable built-ins.
+- **Structured reports**: JSON output with verdict, findings, spans, and metadata.
+- **CLI + library API**: use it in scripts/CI or embed it in Python applications.
+- **Deterministic/offline**: no network calls, no external model dependencies.
+
+## Install
+
