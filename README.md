@@ -28,3 +28,7 @@ For development/test tooling:
 python -m pip install -e ".[dev]"
 ```
 
+## Quick start
+
+### Scan input text
+
