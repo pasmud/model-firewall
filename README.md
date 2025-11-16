@@ -57,3 +57,11 @@ Example output (abridged):
 }
 ```
 
+### Scan a file
+
+```bash
+python -m model_firewall scan --direction input --file examples/demo_input.txt --format text
+```
+
+### Scan from stdin
+
