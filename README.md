@@ -65,3 +65,9 @@ python -m model_firewall scan --direction input --file examples/demo_input.txt -
 
 ### Scan from stdin
 
+```bash
+cat examples/demo_input.txt | python -m model_firewall scan --direction input --text - --format json
+```
+
+### Use custom rules
+
