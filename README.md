@@ -71,3 +71,22 @@ cat examples/demo_input.txt | python -m model_firewall scan --direction input --
 
 ### Use custom rules
 
+```bash
+python -m model_firewall scan \
+  --direction output \
+  --file examples/demo_output.txt \
+  --rules examples/custom_rules.json \
+  --format json
+```
+
+Disable built-in rules and use only your own:
+
+```bash
+python -m model_firewall scan \
+  --direction output \
+  --text "release project phoenix now" \
+  --rules examples/custom_rules.json \
+  --no-builtin \
+  --format json
+```
+
