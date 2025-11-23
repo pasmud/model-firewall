@@ -90,3 +90,9 @@ python -m model_firewall scan \
   --format json
 ```
 
+### List built-in rules
+
+```bash
+python -m model_firewall rules
+```
+
