@@ -96,3 +96,13 @@ python -m model_firewall scan \
 python -m model_firewall rules
 ```
 
+## CLI reference
+
+```text
+python -m model_firewall --help
+python -m model_firewall scan --help
+python -m model_firewall rules --help
+```
+
+Key `scan` options:
+
