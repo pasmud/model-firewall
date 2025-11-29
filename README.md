@@ -106,3 +106,15 @@ python -m model_firewall rules --help
 
 Key `scan` options:
 
+- `--direction {input,output}`: which rule set to evaluate.
+- `--text TEXT` / `--file PATH`: text source (`--text -` reads stdin).
+- `--rules PATH`: additional JSON rules file (repeatable).
+- `--no-builtin`: disable bundled rules.
+- `--format {json,text}`: report format.
+- `--max-findings N`: stop after N findings.
+- `--redact-matches`: redact matched text in findings.
+- `--fail-on {allow,flag,block}`: exit non-zero when verdict is at/above threshold (default `block`).
+- `--output PATH`: write report/rules to file.
+
+Exit codes:
+
