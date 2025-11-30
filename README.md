@@ -118,3 +118,12 @@ Key `scan` options:
 
 Exit codes:
 
+- `0`: verdict below `--fail-on` threshold.
+- `1`: verdict at/above `--fail-on` threshold (useful for CI/gates).
+- `2`: usage or runtime error.
+
+## Python API
+
+```python
+from model_firewall import Firewall, Direction
+
