@@ -139,3 +139,13 @@ print(report.to_dict())       # JSON-serializable dict
 
 Load custom rule files:
 
+```python
+from model_firewall import Firewall
+
+firewall = Firewall.from_rule_files(
+    ["examples/custom_rules.json"],
+    include_builtin=True,
+)
+report = firewall.scan_text("project phoenix", direction="output")
+```
+
