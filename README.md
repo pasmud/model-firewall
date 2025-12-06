@@ -149,3 +149,25 @@ firewall = Firewall.from_rule_files(
 report = firewall.scan_text("project phoenix", direction="output")
 ```
 
+## Rule format
+
+Rules are JSON objects with required fields:
+
+```json
+{
+  "rules": [
+    {
+      "id": "CUSTOM-001",
+      "name": "Internal codename",
+      "description": "Flags confidential codename mentions.",
+      "pattern": "(?i)\\bproject[ -]?phoenix\\b",
+      "direction": "output",
+      "severity": "medium",
+      "action": "flag",
+      "enabled": true,
+      "tags": ["confidential"]
+    }
+  ]
+}
+```
+
