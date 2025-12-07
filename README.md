@@ -171,3 +171,12 @@ Rules are JSON objects with required fields:
 }
 ```
 
+Fields:
+
+- `id`, `name`, `description`, `pattern` (required)
+- `direction`: `input` | `output` | `both` (default `both`)
+- `severity`: `low` | `medium` | `high` | `critical` (default `medium`)
+- `action`: `allow` | `flag` | `block` (default `flag`)
+- `enabled`: boolean (default `true`)
+- `tags`: list of strings
+
