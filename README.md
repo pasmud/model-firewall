@@ -180,3 +180,13 @@ Fields:
 - `enabled`: boolean (default `true`)
 - `tags`: list of strings
 
+## Architecture / behavior
+
+1. **Rule compilation**: `Firewall` compiles rule regexes at initialization; invalid patterns fail fast.
+2. **Direction filtering**: only rules matching the scan direction are evaluated.
+3. **Matching**: each rule is scanned with `re.finditer`; every match becomes a `Finding` with rule metadata and span.
+4. **Verdict aggregation**: overall verdict is the highest action-severity rank observed (`allow < flag < block`).
+5. **Reporting**: report includes verdict, counts, findings, and metadata; output is deterministic for the same inputs/rules.
+
+Built-in rules cover common LLM app risks (prompt injection, exfiltration, jailbreak framing, dangerous shell commands, PII, secrets, and unsafe high-certainty output). They are a baseline, not a complete security program.
+
