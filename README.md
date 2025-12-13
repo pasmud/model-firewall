@@ -190,3 +190,11 @@ Fields:
 
 Built-in rules cover common LLM app risks (prompt injection, exfiltration, jailbreak framing, dangerous shell commands, PII, secrets, and unsafe high-certainty output). They are a baseline, not a complete security program.
 
+## Examples
+
+The `examples/` directory contains runnable demo inputs:
+
+- `examples/demo_input.txt` — malicious input with prompt injection + PII.
+- `examples/demo_output.txt` — output containing a custom codename and token-like value.
+- `examples/custom_rules.json` — custom rule for the codename.
+
