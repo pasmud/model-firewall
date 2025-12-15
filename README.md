@@ -198,3 +198,10 @@ The `examples/` directory contains runnable demo inputs:
 - `examples/demo_output.txt` — output containing a custom codename and token-like value.
 - `examples/custom_rules.json` — custom rule for the codename.
 
+Demo commands:
+
+```bash
+python -m model_firewall scan --direction input --file examples/demo_input.txt --format json
+python -m model_firewall scan --direction output --file examples/demo_output.txt --rules examples/custom_rules.json --format json
+```
+
