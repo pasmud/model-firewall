@@ -205,3 +205,11 @@ python -m model_firewall scan --direction input --file examples/demo_input.txt -
 python -m model_firewall scan --direction output --file examples/demo_output.txt --rules examples/custom_rules.json --format json
 ```
 
+## Tests
+
+Run the offline test suite:
+
+```bash
+python -m unittest discover -v
+```
+
