@@ -213,3 +213,9 @@ Run the offline test suite:
 python -m unittest discover -v
 ```
 
+Or with pytest (if installed):
+
+```bash
+python -m pytest -q
+```
+
