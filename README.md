@@ -219,3 +219,13 @@ Or with pytest (if installed):
 python -m pytest -q
 ```
 
+## Limitations
+
+- **Regex-based detection**: rules catch explicit patterns, not semantic intent. Obfuscated or novel attacks can bypass simple patterns.
+- **No NLP/model classifier**: this is a deterministic policy layer, not a machine-learning safety model.
+- **PII patterns are heuristic**: formats like credit card numbers can produce false positives/negatives; validate with domain-specific checks when needed.
+- **No content transformation**: the firewall reports findings; it does not rewrite/sanitize text except optional match redaction in reports.
+- **Not a complete defense**: use alongside authentication, authorization, output encoding, data-loss prevention, human review, and provider safety controls.
+
+## License
+
