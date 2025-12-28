@@ -229,3 +229,4 @@ python -m pytest -q
 
 ## License
 
+MIT. See [LICENSE](LICENSE).
